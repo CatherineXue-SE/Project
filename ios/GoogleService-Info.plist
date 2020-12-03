@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>596506060801-rmvso7ghq1o8dhctldgf8mstkorhs5ns.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.596506060801-rmvso7ghq1o8dhctldgf8mstkorhs5ns</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBVbFIyBsU0GugAmt3kc69pvZUU56w7Vb4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>596506060801</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>edu.uco.hxue.Fall2020.Project</string>
+	<key>PROJECT_ID</key>
+	<string>seii-bc463</string>
+	<key>STORAGE_BUCKET</key>
+	<string>seii-bc463.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:596506060801:ios:e1501522da233e3cf43800</string>
+	<key>DATABASE_URL</key>
+	<string>https://seii-bc463.firebaseio.com</string>
+</dict>
+</plist>

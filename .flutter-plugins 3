@@ -1,0 +1,11 @@
+# This is a generated file; do not edit or check into version control.
+cloud_firestore=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/cloud_firestore-0.12.11/
+firebase_auth=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-0.14.0+9/
+firebase_core=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-0.4.5/
+firebase_core_web=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-0.1.1+2/
+firebase_storage=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_storage-3.1.6/
+path_provider=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider-1.6.24/
+path_provider_linux=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-0.0.1+2/
+path_provider_macos=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_macos-0.0.4+6/
+path_provider_windows=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-0.0.4+3/
+sqflite=/Users/haoyunxue/Applications/flutter/.pub-cache/hosted/pub.dartlang.org/sqflite-1.3.2+1/
