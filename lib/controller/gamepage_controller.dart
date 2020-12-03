@@ -23,17 +23,19 @@ class GamePageController
             {
             state.record.finalboard[index] = opponent;     
             state.record.steps.add(index.toString() + '-' + opponent);
-            });
-                        print(  state.record.steps);
+            state.endTime = DateTime.now().millisecondsSinceEpoch + 25 * 60 * 60;
 
+            });
            if(checkWin(state.record.finalboard, opponent))
             {
                 state.stateChanged(()
             {
-              state.img = "You Win!";               print('31');
+              state.img = "You Win!";                     print('33');
+              state.endTime =DateTime.now().millisecondsSinceEpoch + 100000000000;
+     
             });
               state.record.winner = opponent;
-             await updateRecord(state.record);
+              updateRecord(state.record);
             }
              else
           {
@@ -41,14 +43,18 @@ class GamePageController
             {
                if(checkWin(state.record.finalboard, player))
                {
-                     state.img = "You Lost!";               print('42');
+                     state.img = "You Lost!";                             
                    state.record.winner = player;
-             await updateRecord(state.record);
+                  state.endTime =DateTime.now().millisecondsSinceEpoch +  100000000000;
+                  print('49');
+              updateRecord(state.record);
                  }
                  else
                    {
-                   state.img = "TIE!";               print('48');
-             await updateRecord(state.record);
+                   state.img = "TIE!";                             print('54');    
+                  state.endTime =DateTime.now().millisecondsSinceEpoch +  100000000000;
+
+                   updateRecord(state.record);
                     }
               }
           else
@@ -56,19 +62,19 @@ class GamePageController
             int move =  findBestMove(state.record.finalboard);   
             state.record.finalboard[move] = player;
             state.record.steps.add(move.toString() + '-' + player);
-            print(  state.record.steps);
+            print( state.record.steps);
           if(checkWin(state.record.finalboard, player))
           {
-            state.img = "You Lost!";
+            state.img = "You Lost!";                  print('68');
             state.record.winner = player;
-                           print('62');
-             await updateRecord(state.record);
+              state.endTime = DateTime.now().millisecondsSinceEpoch + 100000000000;
+              updateRecord(state.record);
           }
           else if(isFull(state.record.finalboard))
             {
-               state.img = "TIE!";
-               print('68');
-             await updateRecord(state.record);
+               state.img = "TIE!";                  print('75');
+              state.endTime = DateTime.now().millisecondsSinceEpoch + 100000000000;
+              updateRecord(state.record);
 
             }
             }
@@ -130,9 +136,9 @@ class GamePageController
   void updateRecord(Record record) async{
     DateTime now = DateTime.now();
     record.enddatetime = now.toString().substring(0,16);                 
-         record.gameid =  await MyFirebase.addRecord(record);
+    record.gameid =  await MyFirebase.addRecord(record);
          print(record.gameid);
-                     await MyFirebase.updateRecord(record);
+       await MyFirebase.updateRecord(record);
   }
   int findBestMove(List<dynamic> currentboard) 
 { 

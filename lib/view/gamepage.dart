@@ -1,3 +1,6 @@
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
+
 import '../model/record.dart';
 
 import '../controller/myfirebase.dart';
@@ -18,9 +21,11 @@ class GamePage extends StatefulWidget
 }
 class GamePageState extends State<GamePage>
 {
-  Record record;git 
+  Record record; 
   GamePageController controller;
   BuildContext context;
+      int endTime = DateTime.now().millisecondsSinceEpoch + 25 * 60 * 60;
+
       String img = "";
     var formKey = GlobalKey<FormState>();
 
@@ -97,7 +102,106 @@ class GamePageState extends State<GamePage>
           )
           ,
           Container(
-           
+           child: CountdownTimer(
+            endTime: endTime,
+             widgetBuilder: (_, CurrentRemainingTime time) {
+                List<Widget> list = [];
+              if(time == null)
+              {
+                record.winner = 'x';
+                img = "You Lost!";    
+                endTime = DateTime.now().millisecondsSinceEpoch + 100000000000;
+                controller.updateRecord(record);
+                 list.add(Row(
+                  children: <Widget>[
+                    Icon(Icons.sentiment_very_dissatisfied),
+                    Text('Time out'),
+                  ],
+                ));
+                 return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: list,
+              
+              );}
+              else
+              {
+                if(record.gameid == null)
+                {
+                  return Text("${time.min}:${time.sec}",      style: TextStyle(fontSize: 30));
+                }
+                else
+                {
+                  return Text("");
+                }
+              }}
+             )
+           /*CountdownTimer(
+            endTime: endTime,
+            widgetBuilder: (BuildContext context, CurrentRemainingTime time) {
+              List<Widget> list = [];
+              if(time == null)
+              {
+              list.add(Row(
+                  children: <Widget>[
+                    Icon(Icons.sentiment_very_dissatisfied),
+                    Text('Time out'),
+                  ],
+                ));
+              }
+              else
+              {
+  if(time.days != null) {
+                list.add(Row(
+                  children: <Widget>[
+                    Icon(Icons.sentiment_satisfied),
+                    Text(time.days.toString()),
+                  ],
+                ));
+              }
+              if(time.hours != null) {
+                list.add(Row(
+                  children: <Widget>[
+                    Icon(Icons.sentiment_satisfied),
+                    Text(time.hours.toString()),
+                  ],
+                ));
+              }
+              if(time.min != null) {
+                list.add(Row(
+                  children: <Widget>[
+                    Icon(Icons.sentiment_very_dissatisfied),
+                    Text(time.min.toString()),
+                  ],
+                ));
+              }
+              if(time.sec != null) {
+                list.add(Row(
+                  children: <Widget>[
+                    Icon(Icons.sentiment_very_satisfied),
+                    Text(time.sec.toString()),
+                  ],
+                ));
+              }
+              }
+            
+       
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: list,
+              
+              );
+                /*list.add(Row(
+                  children: <Widget>[
+                    Icon(Icons.sentiment_dissatisfied),
+                    Text(time.days.toString()),
+                  ],
+              
+                )
+                */
+            },
+
+                ),*/
+          
           ),
           Container(
             padding: EdgeInsets.all(20.0),
