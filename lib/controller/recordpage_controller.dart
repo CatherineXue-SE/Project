@@ -35,11 +35,11 @@ void addButton() async
   /*print("addButton called");
  Record b =  
  await Navigator.push(state.context, MaterialPageRoute(
-    builder: (context) => ProductPage(state.user,null))
+    builder: (context) => RecordPage(state.user,null))
      );
      if (b!= null)
      {
-       //state.products.add(b);
+       //state.Records.add(b);
        //new book stored in Firebase
      }
      else
@@ -53,12 +53,12 @@ void onTap(int index) async
   if (state.deleteIndices == null)
   {//nevigate to BookPage
  Record b = await Navigator.push(state.context,MaterialPageRoute(
-  builder: null,//(context) => ProductPage(state.user,state.products[index]),
+  builder: null,//(context) => RecordPage(state.user,state.Records[index]),
   ));
   if (b!= null)
   {
     // update book is stored in firebase
-    //state.products[index] = b;
+    //state.Records[index] = b;
   }
   }
   else
@@ -85,9 +85,9 @@ void onTap(int index) async
 } 
 Future gotohomelist() async 
  {
-List<Record> myproducts = await MyFirebase.getRecords(state.user.uid);
+List<Record> myRecords = await MyFirebase.getRecords(state.user.uid);
  Navigator.push(state.context,MaterialPageRoute(
-  builder: null,//(context) => HomePage(state.user, myproducts),
+  builder: null,//(context) => HomePage(state.user, myRecords),
 ));   
  }
 void longpress(int index)
@@ -112,8 +112,8 @@ for (var index in state.deleteIndices)
 {
   try
 {
- // await MyFirebase.deleteProduct(state.products[index]);
-  //state.products.removeAt(index);
+ // await MyFirebase.deleteRecord(state.Records[index]);
+  //state.Records.removeAt(index);
 }
 catch(e){
   print('BOOK DELETE ERROR: ' + e.toString());  
@@ -128,7 +128,7 @@ state.stateChanged((){
 void gotohomepage() async
 {
   await Navigator.push(state.context,MaterialPageRoute(
-  builder: (context) => OptionPage(state.user,state.records),
+  builder: (context) => OptionPage(state.user),
 ));
 }
 
@@ -139,11 +139,69 @@ void gotoreplaypage(Record record) async
   record.finalboard[i] = '-';
   }*/
   print(record.finalboard.toString());
+            print( record.steps.toString());
+
   await Navigator.push(state.context,MaterialPageRoute(
   builder: (context) => ReplayPage(record),
 ));
 }
+Future datelowtohigh(List<Record>recordlist) async
+{
+   List<Record> recordsearchlist = List<Record>();
+  recordlist.sort((a, b) => a.startdatetime.compareTo(b.startdatetime)); 
 
+    recordsearchlist.addAll(recordlist);
+state.stateChanged(()
+        {        
+          state.records.clear();
+        state.records.addAll(recordsearchlist);
+        Navigator.pop(state.context);
+      });
+      return;
+
+}
+Future datehightolow(List<Record>recordlist) async
+{
+   List<Record> recordsearchlist = List<Record>();
+  recordlist.sort((a, b) => a.startdatetime.compareTo(b.startdatetime)); 
+ recordlist = recordlist.reversed.toList();
+
+    recordsearchlist.addAll(recordlist);
+state.stateChanged(()
+        {        
+          state.records.clear();
+        state.records.addAll(recordsearchlist);
+        Navigator.pop(state.context);
+      });
+      return;
+
+}
+Future filterSearchResults(String query) async {
+    List<Record> Recordsearchlist = List<Record>();
+      List<Record> myRecords = await MyFirebase.getRecordList(state.user.uid);
+    Recordsearchlist.addAll(myRecords);
+    if(query.isNotEmpty) {
+      List<Record> dummyListData = List<Record>();
+      Recordsearchlist.forEach((item) {
+        if(item.startdatetime.contains(query)) {
+          dummyListData.add(item);
+        }
+      });
+state.stateChanged(()
+        {        
+          state.records.clear();
+        state.records.addAll(dummyListData);
+      });
+      return;
+    } else {
+     state.stateChanged(()
+         {        
+          state.records.clear();
+        state.records.addAll(myRecords);
+      });
+    }
+
+  }
 /*void sharedWithMeMenu() async
 {
 List<Book> books = await MyFirebase.getBooksSharedWithME(state.user.email);

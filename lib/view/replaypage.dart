@@ -70,31 +70,34 @@ class ReplayPageState extends State<ReplayPage>
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          
-         Expanded(
-           
-            child: GridView.builder(
-              padding: EdgeInsets.all(5.0),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: int.parse(record.gamemode),
-                  childAspectRatio: 1.0,
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0),
-              itemCount: record.finalboard.length ,
-              itemBuilder: (context, i) => SizedBox(
-                    width: 150.0,
-                    height: 150.0,
-                    child: MaterialButton(
-                      onPressed: null,//() => controller.playGame(i),
-                      child: Image(
-                        image: this.getImage(record.finalboard[i]),
-                      ),
-                    ),
+            Expanded(
+              child: GridView.builder(
+                padding: EdgeInsets.all(0.0),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: int.parse(record.gamemode),
+                    childAspectRatio: 1.0,
+                    crossAxisSpacing: 0.0,
+                    mainAxisSpacing: 0.0),
+                itemCount: record.finalboard.length,
+                itemBuilder: (context, i) => SizedBox(
+                  width: 150.0,
+                  height: 150.0,
+                  child: FlatButton(
+                    onPressed: null,//() => controller.playGame(i),
+                    color: Colors.white,
+                    child:
+                        //Image(image: this.getImage(record.finalboard[i]),
+                        Text(record.finalboard[i],
+                            style: TextStyle(fontSize: 100.0)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0.0),
+                      side: BorderSide(color: Colors.black),
                     ),
                   ),
-            
-          )
-          ,
+                ),
+              ),
+            ),
+           
           Container(
             padding: EdgeInsets.all(20.0),
             child: Text(img,style: TextStyle(

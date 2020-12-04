@@ -1,22 +1,27 @@
-import 'dart:ffi';
 
-import 'package:Project/model/players.dart';
-import 'package:Project/model/user.dart';
-import 'package:Project/view/gamepage.dart';
-import 'package:Project/view/loginpage.dart';
+import 'dart:io';
+
+import 'package:Project/view/aivaigamepage.dart';
+import 'package:Project/view/editaccountpage.dart';
+
+import '../model/players.dart';
+import '../model/user.dart';
+import '../view/gamepage.dart';
+import '../view/loginpage.dart';
+import '../view/p2pgamepage.dart';
 import '../model/record.dart';
 import '../view/recordpage.dart';
 import '../view/optionpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'myfirebase.dart';
-
 class OptionPageController 
 {
   OptionPageState state;
   OptionPageController(this.state);
-
-  // ignore: non_constant_identifier_names
+    ServerSocket serversocket  ;
+    Socket clientsocket;
+      // ignore: non_constant_identifier_names
   void PVPC()
   {
     Record newrecord = new Record();
@@ -41,17 +46,97 @@ class OptionPageController
   }
 
 
-  void PVP()
+  void PVP() async
   {
     Record newrecord = new Record();
     newrecord.serialize();
     newrecord.gamemode = state.radioValue.toString();
     newrecord.player1 = state.user.uid;
-    newrecord.ai = 'off';
+    newrecord.player2 = 'RA3IAepKBxgWtIVoNQ6jOCEZnOq1';
     DateTime now = DateTime.now();
     newrecord.startdatetime = now.toString().substring(0,16);
+    newrecord.ai = 'off';
+    List<dynamic> newsteps = new List<dynamic>();
+     for (int i=0;i<state.radioValue * state.radioValue;i++)
+    {
+    newsteps.add("-") ;
+    }
+    newrecord.finalboard = newsteps;
+    newrecord.steps = new List<dynamic>();
+    //startserver();
+     Navigator.push(state.context,MaterialPageRoute(
+                builder: (context) => P2PGamePage(newrecord),
+              ));
+          // Navigator.push(state.context,MaterialPageRoute(
+       //         builder: (context) => P2P(),
+         //     ));
+
+   /* Record newrecord = new Record();
+    newrecord.serialize();
+    newrecord.gamemode = state.radioValue.toString();
+    newrecord.player1 = state.user.uid;
+    newrecord.ai = 'off';
+    DateTime now = DateTime.now();
+    newrecord.startdatetime = now.toString().substring(0,16);*/
+
+  }
+ 
+
+  void startserver() async {
+    serversocket =
+        await ServerSocket.bind('localhost', 3030, shared: true);
+    print(serversocket);
+    serversocket.listen(handleClient);
+  }
+    void handleClient(Socket client) {
+    clientsocket = client;
+    clientsocket.listen(
+      (onData) {
+        print(String.fromCharCodes(onData).trim());
+      /*  setState(() {
+          items.insert(
+              0,
+              MessageItem(clientSocket.remoteAddress.address,
+                  String.fromCharCodes(onData).trim()));
+        });*/
+      },
+      onError: (e) {
+        print(e.toString());
+        disconnectClient();
+      },
+      onDone: () {
+        print("Connection has terminated.");
+        disconnectClient();
+      },
+    );
+  
   }
 
+    void disconnectClient() {
+    if (clientsocket != null) {
+      clientsocket.close();
+      clientsocket.destroy();
+    }
+
+   state.stateChanged(() {
+      clientsocket = null;
+    });
+  }
+  void dataHandler(data){
+      print(new String.fromCharCodes(data).trim());
+      clientsocket.destroy();
+
+}
+
+void errorHandler(error, StackTrace trace){
+   print(error);
+      clientsocket.destroy();
+
+}
+
+void doneHandler(){     
+   clientsocket.destroy();
+}
 
   void PCVPC()
   {
@@ -59,15 +144,27 @@ class OptionPageController
     newrecord.serialize();
     newrecord.gamemode = state.radioValue.toString();
     newrecord.player1 = state.user.uid;
+    newrecord.player2 = state.user.uid;
     newrecord.ai = 'on';
     DateTime now = DateTime.now();
     newrecord.startdatetime = now.toString().substring(0,16);
+      List<dynamic> newsteps = new List<dynamic>();
+     for (int i=0;i<state.radioValue * state.radioValue;i++)
+    {
+    newsteps.add("-") ;
+    }
+    newrecord.finalboard = newsteps;
+    newrecord.steps = new List<dynamic>();
+     Navigator.push(state.context,MaterialPageRoute(
+                builder: (context) => AIVAIGamePage(newrecord),));
   }
 
   void ViewRecord() async
   {
     
-      List<Record> allrecords = await MyFirebase.getRecords(state.user.uid);
+      List<Record> allrecords = new    List<Record> ();
+      allrecords = await MyFirebase.getRecordList(state.user.uid);
+      print(allrecords.length);
       List<Players> players = new List<Players>();
       for(int i=0;i<allrecords.length;i++)
       {
@@ -80,15 +177,14 @@ class OptionPageController
       newplayer.player2l = ".Local";
       if(allrecords[i].player2 != 'PC')
       {
+        print(allrecords[i].gameid + "???");
       User user2 = await MyFirebase.readProfile(allrecords[i].player2);
       newplayer.player2f = user2.fname;
       newplayer.player2l = user2.lname;
       }
-
-
+      
       players.add(newplayer);
       }
-      print("dfdfdfdfdfd" + players[0].player1f.toString());
       await Navigator.push(state.context,MaterialPageRoute(
   builder: (context) => RecordPage(state.user,allrecords,players),
 ));
@@ -117,6 +213,12 @@ void onTabTapped(int index) {
           break;
   }       });
 
+ }
+ void editAccount()
+ {
+   Navigator.push(state.context,MaterialPageRoute(
+                builder: (context) => EditAccountPage(state.user),
+              ));
  }
 void signOut()
 {
@@ -203,30 +305,6 @@ void longpress(int index)
     });
   }
 }
-void deleteButton() async
-{
-  //sort descending order of deleteindices
-  state.deleteIndices.sort((n1,n2){
-     if (n1<n2) return 1;//asc = -1
-     else if (n1==n2) return 0;
-     else return -1;//asc = 1
-  });
-  //deleteIndices: [a,b,c,d]
-for (var index in state.deleteIndices)
-{
-  try
-{
-  await MyFirebase.deleteProduct(state.records[index]);
-  state.records.removeAt(index);
-}
-catch(e){
-  print('BOOK DELETE ERROR: ' + e.toString());  
-}
 
-}
-state.stateChanged((){
-  state.deleteIndices = null;
-});
 
-}
 }

@@ -1,5 +1,7 @@
 import 'dart:ffi';
 import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
 import '../view/mydialog.dart';
 import 'package:flutter/material.dart';
 //import 'package:image_picker/image_picker.dart';
@@ -54,7 +56,7 @@ class SignUpPageState extends State<SignUpPage>
                                     shape: BoxShape.circle,
                                    image: 
                                           imagefile == null ? new DecorationImage(
-                                          image: new ExactAssetImage("assets/images/bartericon.jpg"),
+                                          image: new ExactAssetImage("images/board.png"),
                                           fit: BoxFit.cover,
                                         ):new DecorationImage(
                                           image: new FileImage(imagefile),
@@ -63,7 +65,7 @@ class SignUpPageState extends State<SignUpPage>
                                     
                                 ))]),
                       ])),
-                              /*  Padding(
+                       /*       Padding(
                             padding: EdgeInsets.only(top: 90.0, right: 100.0),
                             child: new Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -97,11 +99,11 @@ class SignUpPageState extends State<SignUpPage>
                   child: Icon(Icons.crop),
                   onPressed: () => controller.cropImage(),
                 ),*/
-                FlatButton
+               /* FlatButton
                 (
                   child: Icon(Icons.refresh),
                   onPressed: null,//() => controller.clearimage(),
-                ),
+                ),*/
               ],
             ),
               
@@ -161,70 +163,10 @@ class SignUpPageState extends State<SignUpPage>
                      )
                     ]),
                ),
-                  Container(
-                    padding: EdgeInsets.only(left:30,right: 30),
-                    child: TextFormField(
-                          initialValue: "",//user.city,
-                          autocorrect: false,
-                          decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10),
-                          hintText: 'Address',
-                          labelText: 'Address',),
-                          validator: controller.validateAddress,
-                          onSaved: controller.saveAddress,),
-                  ),
-                      
+                  
                 
               
-                Container(
-                 padding: EdgeInsets.only(left:30, right: 30),
-                 child: new Row(
-                    children: <Widget>[
-                    new Flexible(
-                      child: TextFormField(
-                      initialValue: '',//user.city,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10),
-                      hintText: 'City',
-                      labelText: 'City',),
-                      validator: controller.validateCity,
-                      onSaved: controller.saveCity,),
-                    ),
-                  
-                    ]),
-               ),
-                 Container(
-                 padding: EdgeInsets.only(left:30, right: 30),
-                 child: new Row(
-                    children: <Widget>[
-                   
-                     new Flexible(
-                     child: TextFormField(
-                    initialValue: user.lname,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(10),
-                    hintText: 'State',
-                    labelText: 'State',),
-                    validator: controller.validateState,
-                    onSaved: controller.saveState),
-                     ),
-                                         SizedBox(width: 10.0,),
-
-                      new Flexible(
-                      child: TextFormField(
-                      initialValue: '',//user.city,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(10),
-                      hintText: 'Zip',
-                      labelText: 'Zip',),
-                      validator: controller.validateZip,
-                      onSaved: controller.saveZip,),
-                    ),
-                    ]),
-               ),
+      
 /*
                  TextFormField(
                   initialValue: user.address,

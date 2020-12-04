@@ -14,6 +14,7 @@ class ReplayPageController
   ReplayPageController(this.state);
   String player = 'x', opponent = 'o'; 
   int score  = 0;
+  int count = 0;
   // ignore: non_constant_identifier_names
   RepPlayGame(Record record) async {
              
@@ -24,12 +25,36 @@ class ReplayPageController
                     }
                     state.stateChanged(()
                     {
-                            String s = record.steps[0].toString();
-                            int step = int.parse(s.split('-')[0]);
-                            String player = s.split('-')[1];
-                            record.finalboard[step] = player; 
-                            print(s);
-                            sleep(const Duration(seconds: 2));
+                    
+                            if(count == record.steps.length-1)
+                            {
+                               for(int i =0;i<= count;i++)
+                    {   
+                      String s = record.steps[i].toString();
+                      int step = int.parse(s.split('-')[0]);
+                       String playerc = s.split('-')[1];
+                      record.finalboard[step] = playerc;
+                    }
+                                      }
+                    
+                            
+                            else
+                            {
+                              for(int i =0;i<= count;i++)
+                            {   
+                             String s = record.steps[i].toString();
+                      int step = int.parse(s.split('-')[0]);
+                       String playerc = s.split('-')[1];
+                      record.finalboard[step] = playerc;
+
+                    }
+                                                                       count =  count + 1;                  
+
+                    
+                            
+                            }   
+
+                           
                     });
                     
                    

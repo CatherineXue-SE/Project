@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:Project/view/loginpage.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../view/mydialog.dart';
 import 'package:flutter/material.dart';
 //import 'package:image_cropper/image_cropper.dart';
@@ -15,7 +19,7 @@ class SignUpPageController
   SignUpPageController(this.state);
 
 
-  /*Future<void> pickImage(ImageSource source) async
+  Future<void> pickImage(ImageSource source) async
   {
     File selected = await ImagePicker.pickImage(source: source);
     state.stateChanged(()
@@ -48,7 +52,7 @@ state.stateChanged(()
        state.user.photourl = '';
       }
     );  }
-    */
+    
 String validateState(String value)
   {
 if (value.length != 2)
@@ -207,7 +211,7 @@ return null;
          state.user.photourl = imagename.toString();
        } 
        else
-        state.user.photourl = "https://firebasestorage.googleapis.com/v0/b/barter-ex.appspot.com/o/images%2Fbartericon.jpg?alt=media&token=053f2e4e-ca5b-47e2-a388-12c8f89e87b4";
+        state.user.photourl = "https://firebasestorage.googleapis.com/v0/b/seii-bc463.appspot.com/o/board.png?alt=media&token=ff9b9d3d-69c4-4009-b36d-cf47de017e2e";
 
     DateTime now = DateTime.now();
     //DateTime date = new DateTime();//(now.year, now.month, now.day);
@@ -218,7 +222,7 @@ return null;
     {
       state.user.photourl = null;
     }
-        /*MyDialog.popProgressBar(state.context);
+        MyDialog.popProgressBar(state.context);
 
     MyDialog.info(
        context: state.context,
@@ -226,7 +230,7 @@ return null;
        message: 'Your account is created with ${state.user.email}',
        action: () =>   Navigator.push(state.context,MaterialPageRoute(builder: (context) => LoginPage())),
          
-     );*/
+     );
 
   }
 }

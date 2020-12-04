@@ -1,9 +1,11 @@
+import 'package:Project/view/forgetpassword.dart';
 import 'package:flutter/material.dart';
 import '../view/loginpage.dart';
 import '../model/user.dart';
 import '../view/signuppage.dart';
 import '../model/record.dart';
 import '../view/optionpage.dart';
+import '../view/mydialog.dart';
 import '../controller/myfirebase.dart';
 class LoginPageController
 {
@@ -47,7 +49,7 @@ class LoginPageController
       Navigator.push
                (state.context,
                MaterialPageRoute(
-          builder: null//(context) => ForgetPasswordPage()
+          builder: (context) => ForgetPasswordPage()
                )
                );
   }
@@ -89,15 +91,10 @@ catch(e)
 //no displayname and zip can be updated
 }
   //MyDialog.popProgressBar(state.context);
-    print(state.user.uid);
-
-  List<Record> allproducts = await MyFirebase.getRecords(state.user.uid);
-  print(allproducts.length);
-  Navigator.pop(state.context);//dispose this dialog
-               Navigator.push
-               (state.context,
+  //Navigator.pop(state.context);//dispose this dialog
+  Navigator.push (state.context,
                MaterialPageRoute(
-          builder: (context) => OptionPage(state.user,allproducts),
+          builder: (context) => OptionPage(state.user),
         ));
     }
 }

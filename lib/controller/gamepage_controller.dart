@@ -73,7 +73,7 @@ class GamePageController
           else if(isFull(state.record.finalboard))
             {
                state.img = "TIE!";                  print('75');
-              state.endTime = DateTime.now().millisecondsSinceEpoch + 100000000000;
+              state.endTime = DateTime.now().millisecondsSinceEpoch +100000000000;
               updateRecord(state.record);
 
             }

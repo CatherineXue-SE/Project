@@ -287,6 +287,7 @@ try
 }
 static Future<List<Record>> getListDateLowToHigh(String uid) async
 {
+  
 try
   {
     QuerySnapshot querySnapshot = await Firestore.instance

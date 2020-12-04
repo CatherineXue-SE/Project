@@ -46,8 +46,8 @@ class RecordPageState extends State<RecordPage>
     // TODO: implement build
     this.context = context;
     return WillPopScope(
-          //onWillPop: (){return Future.value(false);},
-        onWillPop: () {  },
+          onWillPop: (){return Future.value(true);},
+        //onWillPop: () {  },
         child: Scaffold(
           key: _scaffoldKey,
           appBar: AppBar(
@@ -68,12 +68,12 @@ class RecordPageState extends State<RecordPage>
               ListTile(
              leading: Icon(Icons.calendar_today),
              title: Text('latest to oldest'),
-             onTap: null,//controller.pricelowtohigh,
+             onTap: () => controller.datelowtohigh(records),
            ),
             ListTile(
              leading: Icon(Icons.calendar_today),
              title: Text('oldest to latest'),
-             onTap: null,//controller.pricehightolow,
+             onTap:() =>  controller.datehightolow(records),
            ),
             ListTile(
              leading: Icon(Icons.backspace),
@@ -97,7 +97,7 @@ class RecordPageState extends State<RecordPage>
                     padding: const EdgeInsets.all(8.0),
                     child: TextField(
                       onChanged: (value) {
-                      // controller.filterSearchResults(value);
+                       controller.filterSearchResults(value);
                       },
                       //controller: controller.editingController,
                       decoration: InputDecoration(
@@ -110,33 +110,7 @@ class RecordPageState extends State<RecordPage>
                   
                   ),
             ),
-                /* IconButton(
-                  icon: Icon(Icons.sort), 
-                  onPressed: () {},),*/
-           /* Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    onChanged: (value) {
-                     controller.filterSearchResults(value);
-                    },
-                    //controller: controller.editingController,
-                    decoration: InputDecoration(
-                        labelText: "Search",
-                        hintText: "Search",
-                        prefixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(25.0)))),
-                  ),
-                
-                ),
-                  IconButton(
-                  icon: Icon(Icons.sort), 
-                  onPressed: () {},),
-              ],
-            ),*/
-
+               
             Expanded(
               child: ListView.separated(
            separatorBuilder: (context, index) {
@@ -170,19 +144,10 @@ class RecordPageState extends State<RecordPage>
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
 
+             
               IconButton(
                 icon: Icon(
-                  Icons.view_compact,
-                  size: 20.0,
-                  color: Colors.brown[900],
-                ),
-                onPressed: () {
-                  //   _onDeleteItemPressed(index);
-                },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.replay,
+                  Icons.play_arrow,
                   size: 20.0,
                   color: Colors.brown[900],
                 ),
